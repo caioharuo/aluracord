@@ -1,53 +1,10 @@
-import appConfig from '../../config.json';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: 'Open Sans', sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
+import appConfig from '../../config.json';
 
-function Title({ children, tag }) {
-  const Tag = tag || 'h1';
+import { Title } from '../components/Title';
 
-  return (
-    <>
-      <Tag>{children}</Tag>
-      <style jsx>{`
-        ${Tag} {
-          color: ${appConfig.theme.colors.neutrals['000']};
-          font-size: 24px;
-          font-weight: 600;
-        }
-      `}</style>
-    </>
-  );
-}
+import { GlobalStyle } from '../styles/GlobalStyles';
 
 export default function HomePage() {
   const username = 'caioharuo';
@@ -60,9 +17,9 @@ export default function HomePage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
+          backgroundColor: appConfig.theme.colors.neutrals[200],
           backgroundImage:
-            'url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg)',
+            'url(https://wallpaperforu.com/wp-content/uploads/2020/06/jocker-wallpaper-200611170910101280x960.jpg)',
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundBlendMode: 'multiply',
@@ -107,7 +64,7 @@ export default function HomePage() {
                 color: appConfig.theme.colors.neutrals[300],
               }}
             >
-              {appConfig.name}
+              {`${appConfig.name}  (${username})`}
             </Text>
 
             <TextField
