@@ -1,17 +1,20 @@
-import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
+import { Box, Button, Image, Text, TextField } from '@skynexui/components';
 
 import appConfig from '../../config.json';
 
 import { Title } from '../components/Title';
 
-import { GlobalStyle } from '../styles/GlobalStyles';
-
 export default function HomePage() {
-  const username = 'caioharuo';
+  const [username, setUsername] = useState('');
+
+  const isValidUsername = username.length >= 2;
+  const router = useRouter();
 
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: 'flex',
@@ -46,6 +49,11 @@ export default function HomePage() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              router.push('/chat');
+            }}
             styleSheet={{
               display: 'flex',
               flexDirection: 'column',
@@ -68,6 +76,8 @@ export default function HomePage() {
             </Text>
 
             <TextField
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -108,13 +118,16 @@ export default function HomePage() {
               minHeight: '240px',
             }}
           >
-            <Image
-              styleSheet={{
-                borderRadius: '50%',
-                marginBottom: '16px',
-              }}
-              src={`https://github.com/${username}.png`}
-            />
+            {isValidUsername && (
+              <Image
+                styleSheet={{
+                  borderRadius: '50%',
+                  marginBottom: '16px',
+                }}
+                src={`https://github.com/${username}.png`}
+              />
+            )}
+
             <Text
               variant="body4"
               styleSheet={{
