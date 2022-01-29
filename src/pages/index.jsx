@@ -52,7 +52,7 @@ export default function HomePage() {
             onSubmit={(event) => {
               event.preventDefault();
 
-              router.push('/chat');
+              router.push(`/chat?username=${username}`);
             }}
             styleSheet={{
               display: 'flex',

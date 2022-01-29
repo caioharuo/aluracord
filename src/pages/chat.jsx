@@ -1,24 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { Box, TextField } from '@skynexui/components';
+import { createClient } from '@supabase/supabase-js';
 
 import appConfig from '../../config.json';
 
 import { Header } from '../components/Header';
 import { MessageList } from '../components/MessageList';
+import { ButtonSendSticker } from '../components/ButtonSendSticker';
+
+const SUPABASE_URL = 'https://hxzmylwvbetvjqdyhane.supabase.co';
+const SUPABASE_ANON_KEY =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMxNzY1MiwiZXhwIjoxOTU4ODkzNjUyfQ.FdGc8bBDVFxwdsItRNRl8rTnTpdGQExVcFQ_C-VNY2s';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function listenMessagesInRealTime(addMessage) {
+  return supabase
+    .from('messages')
+    .on('INSERT', (response) => {
+      addMessage(response.new);
+    })
+    .subscribe();
+}
 
 export default function ChatPage() {
+  const router = useRouter();
+  const loggedUser = router.query.username;
+
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
+  useEffect(() => {
+    supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        setMessageList(data);
+      });
+
+    listenMessagesInRealTime((newMessage) => {
+      setMessageList((currentListValue) => {
+        return [newMessage, ...currentListValue];
+      });
+    });
+  }, []);
+
   function handleNewMessage(newMessage) {
     const message = {
-      id: messageList.length + 1,
-      from: 'caioharuo',
+      from: loggedUser,
       text: newMessage,
     };
 
-    setMessageList([message, ...messageList]);
+    supabase.from('messages').insert([message]).then();
+
     setMessage('');
   }
 
@@ -64,13 +101,6 @@ export default function ChatPage() {
             padding: '16px',
           }}
         >
-          {/* <ul>
-            {messageList.map((message) => (
-              <li key={message.id}>
-                {message.from}: {message.text}
-              </li>
-            ))}
-          </ul> */}
           <MessageList messages={messageList} />
 
           <Box
@@ -101,6 +131,12 @@ export default function ChatPage() {
                 marginRight: '12px',
                 color: appConfig.theme.colors.neutrals[200],
               }}
+            />
+
+            <ButtonSendSticker
+              onStickerClick={(sticker) =>
+                handleNewMessage(`:sticker: ${sticker}`)
+              }
             />
           </Box>
         </Box>

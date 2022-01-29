@@ -55,7 +55,16 @@ export function MessageList({ messages }) {
               {new Date().toLocaleDateString()}
             </Text>
           </Box>
-          {message.text}
+          {message.text.startsWith(':sticker:') ? (
+            <Image
+              src={message.text.replace(':sticker:', '')}
+              styleSheet={{
+                maxWidth: '350px',
+              }}
+            />
+          ) : (
+            message.text
+          )}
         </Text>
       ))}
     </Box>
