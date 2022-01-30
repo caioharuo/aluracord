@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { Box, TextField } from '@skynexui/components';
+import { Box, Button, TextField } from '@skynexui/components';
 import { createClient } from '@supabase/supabase-js';
 
 import appConfig from '../../config.json';
@@ -9,6 +9,8 @@ import appConfig from '../../config.json';
 import { Header } from '../components/Header';
 import { MessageList } from '../components/MessageList';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
+
+import ReactLoading from 'react-loading';
 
 const SUPABASE_URL = 'https://hxzmylwvbetvjqdyhane.supabase.co';
 const SUPABASE_ANON_KEY =
@@ -29,6 +31,7 @@ export default function ChatPage() {
   const router = useRouter();
   const loggedUser = router.query.username;
 
+  const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState('');
   const [messageList, setMessageList] = useState([]);
 
@@ -39,6 +42,9 @@ export default function ChatPage() {
       .order('created_at', { ascending: false })
       .then(({ data }) => {
         setMessageList(data);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       });
 
     listenMessagesInRealTime((newMessage) => {
@@ -57,6 +63,11 @@ export default function ChatPage() {
     supabase.from('messages').insert([message]).then();
 
     setMessage('');
+  }
+
+  async function handleDeleteMessage(messageId) {
+    await supabase.from('messages').delete().match({ id: messageId });
+    setMessageList(messageList.filter((message) => message.id != messageId));
   }
 
   return (
@@ -101,13 +112,45 @@ export default function ChatPage() {
             padding: '16px',
           }}
         >
-          <MessageList messages={messageList} />
+          {isLoading ? (
+            <Box
+              styleSheet={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+                color: appConfig.theme.colors.neutrals['000'],
+                marginBottom: '16px',
+              }}
+            >
+              <ReactLoading
+                type="spin"
+                color={appConfig.theme.colors.primary[500]}
+              />
+            </Box>
+          ) : (
+            <MessageList
+              loggedUser={loggedUser}
+              messages={messageList}
+              onClickDeleteButton={(messageId) => {
+                handleDeleteMessage(messageId);
+              }}
+            />
+          )}
 
           <Box
+            onSubmit={(event) => {
+              event.preventDefault();
+              handleNewMessage(message);
+            }}
             as="form"
             styleSheet={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              backgroundColor: appConfig.theme.colors.neutrals[800],
+              borderRadius: '0 5px 5px 0',
             }}
           >
             <TextField
@@ -125,18 +168,23 @@ export default function ChatPage() {
                 width: '100%',
                 border: '0',
                 resize: 'none',
-                borderRadius: '5px',
+                borderRadius: '5px 0 0 5px',
                 padding: '6px 8px',
                 backgroundColor: appConfig.theme.colors.neutrals[800],
-                marginRight: '12px',
                 color: appConfig.theme.colors.neutrals[200],
               }}
             />
-
             <ButtonSendSticker
               onStickerClick={(sticker) =>
                 handleNewMessage(`:sticker: ${sticker}`)
               }
+            />
+            <Button
+              type="submit"
+              label="Ok!"
+              styleSheet={{
+                marginRight: '12px',
+              }}
             />
           </Box>
         </Box>

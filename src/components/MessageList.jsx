@@ -1,7 +1,8 @@
-import { Box, Image, Text } from '@skynexui/components';
+import { Box, Button, Image, Text } from '@skynexui/components';
+
 import appConfig from '../../config.json';
 
-export function MessageList({ messages }) {
+export function MessageList({ messages, onClickDeleteButton, loggedUser }) {
   return (
     <Box
       tag="ul"
@@ -20,6 +21,8 @@ export function MessageList({ messages }) {
           key={message.id}
           tag="li"
           styleSheet={{
+            position: 'relative',
+
             borderRadius: '5px',
             padding: '6px',
             marginBottom: '12px',
@@ -64,6 +67,33 @@ export function MessageList({ messages }) {
             />
           ) : (
             message.text
+          )}
+
+          {loggedUser === message.from && (
+            <Button
+              onClick={() => onClickDeleteButton(message.id)}
+              size="sm"
+              iconName="FaRegTrashAlt"
+              styleSheet={{
+                maxWidth: '24px',
+                maxHeight: '24px',
+                borderRadius: '4px ',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                margin: '8px',
+                backgroundColor: 'transparent',
+                color: appConfig.theme.colors.neutrals[300],
+                hover: {
+                  borderRadius: '4px',
+                  backgroundColor: appConfig.theme.colors.neutrals[500],
+                },
+                focus: {
+                  borderRadius: '4px',
+                  backgroundColor: appConfig.theme.colors.neutrals[500],
+                },
+              }}
+            />
           )}
         </Text>
       ))}
