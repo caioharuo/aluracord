@@ -4,10 +4,10 @@
   <div>
     <a href="https://github.com/caioharuo/aluracord#project-">Project</a>  |  
     <a href="https://github.com/caioharuo/aluracord#layout-">Layout</a>  |  
-    <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#tools-%EF%B8%8F">Tools</a>  |  
-    <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#features-">Features</a>  |  
-    <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#how-to-execute-">How to execute</a>  |  
-    <a href="https://github.com/caioharuo/aluracord/blob/master/README.md#license-">License</a>          
+    <a href="https://github.com/caioharuo/aluracord#tools-%EF%B8%8F">Tools</a>  |  
+    <a href="https://github.com/caioharuo/aluracord#features-">Features</a>  |  
+    <a href="https://github.com/caioharuo/aluracord#how-to-execute-">How to execute</a>  |  
+    <a href="https://github.com/caioharuo/aluracord#license-">License</a>          
   </div>
 </div> 
 
