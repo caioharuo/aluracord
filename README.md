@@ -67,6 +67,6 @@ This project was developed using the following technologies:
 
 ## License 📄
 
-This project is under the MIT license. See the [LICENSE](https://github.com/caioharuo/spacetraveling/blob/master/LICENSE) file for more details.
+This project is under the MIT license. See the [LICENSE](https://github.com/caioharuo/aluracord/blob/main/LICENSE) file for more details.
 
 Developed with 💙 by [Caio Hatai](https://www.linkedin.com/in/caio-haruo/) and [Alura](https://www.alura.com.br/).
