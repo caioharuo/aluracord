@@ -2,8 +2,8 @@
   <h1>Aluracord</h1>
   <h2>Imersão ReactJS - Alura</h2>
   <div>
-    <a href="https://github.com/caioharuo/aluracord/new/main?readme=1#project-">Project</a>  |  
-    <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#layout-">Layout</a>  |  
+    <a href="https://github.com/caioharuo/aluracord#project-">Project</a>  |  
+    <a href="https://github.com/caioharuo/aluracord#layout-">Layout</a>  |  
     <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#tools-%EF%B8%8F">Tools</a>  |  
     <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#features-">Features</a>  |  
     <a href="https://github.com/caioharuo/aluracord/new/master?readme=1#how-to-execute-">How to execute</a>  |  
