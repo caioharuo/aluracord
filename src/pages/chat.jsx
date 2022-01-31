@@ -11,6 +11,8 @@ import { MessageList } from '../components/MessageList';
 import { ButtonSendSticker } from '../components/ButtonSendSticker';
 
 import ReactLoading from 'react-loading';
+import toast, { Toaster } from 'react-hot-toast';
+import Head from 'next/head';
 
 const SUPABASE_URL = 'https://hxzmylwvbetvjqdyhane.supabase.co';
 const SUPABASE_ANON_KEY =
@@ -60,6 +62,13 @@ export default function ChatPage() {
       text: newMessage,
     };
 
+    if (message.text.trim().length === 0) {
+      toast('A mensagem deve possuir pelo menos 1 carácter!', {
+        icon: '😅',
+      });
+      return;
+    }
+
     supabase.from('messages').insert([message]).then();
 
     setMessage('');
@@ -68,6 +77,9 @@ export default function ChatPage() {
   async function handleDeleteMessage(messageId) {
     await supabase.from('messages').delete().match({ id: messageId });
     setMessageList(messageList.filter((message) => message.id != messageId));
+    toast('Mensagem apagada!', {
+      icon: '🗑️',
+    });
   }
 
   return (
@@ -85,6 +97,12 @@ export default function ChatPage() {
         color: appConfig.theme.colors.neutrals['000'],
       }}
     >
+      <Head>
+        <title>Aluracord | Chat</title>
+      </Head>
+
+      <Toaster position="top-left" reverseOrder={false} />
+
       <Box
         styleSheet={{
           display: 'flex',

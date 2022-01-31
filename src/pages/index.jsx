@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { Box, Button, Image, Text, TextField } from '@skynexui/components';
@@ -15,6 +16,10 @@ export default function HomePage() {
 
   return (
     <>
+      <Head>
+        <title>Aluracord | Home</title>
+      </Head>
+
       <Box
         styleSheet={{
           display: 'flex',
