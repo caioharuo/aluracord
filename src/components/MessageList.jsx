@@ -21,8 +21,8 @@ export function MessageList({ messages, onClickDeleteButton, loggedUser }) {
           key={message.id}
           tag="li"
           styleSheet={{
+            width: '100%',
             position: 'relative',
-
             borderRadius: '5px',
             padding: '6px',
             marginBottom: '12px',
@@ -58,7 +58,8 @@ export function MessageList({ messages, onClickDeleteButton, loggedUser }) {
               {new Date().toLocaleDateString()}
             </Text>
           </Box>
-          {message.text.startsWith(':sticker:') ? (
+
+          {message.text?.startsWith(':sticker:') ? (
             <Image
               src={message.text.replace(':sticker:', '')}
               styleSheet={{
@@ -66,7 +67,16 @@ export function MessageList({ messages, onClickDeleteButton, loggedUser }) {
               }}
             />
           ) : (
-            message.text
+            <Text
+              as="p"
+              styleSheet={{
+                maxWidth: '90vw',
+                wordWrap: 'break-word',
+                overflow: 'hidden',
+              }}
+            >
+              {message.text}
+            </Text>
           )}
 
           {loggedUser === message.from && (

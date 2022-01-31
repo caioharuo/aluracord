@@ -8,7 +8,7 @@ export function Title({ children, tag }) {
       <Tag>{children}</Tag>
       <style jsx>{`
         ${Tag} {
-          color: ${appConfig.theme.colors.neutrals['000']};
+          color: ${appConfig.theme.colors.primary[500]};
           font-size: 24px;
           font-weight: 600;
         }
